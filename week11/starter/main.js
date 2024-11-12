@@ -167,6 +167,9 @@ productsContainer.addEventListener('click', function(e){
 
     // Add the cart item to the cart array
     cart.push(cartItem);
+    // Save the cart array as a JSON string in localStorage; localStorage.setItem() & JSON.stringify()
+localStorage.setItem('cart',JSON.stringify(cart) )
+
     // Display the cart item
     const cartItemElement = document.createElement('li');
     cartItemElement.classList.add('list-group-item', 'd-flex', 'align-items-center', 'mb-2');
@@ -195,9 +198,29 @@ renderProducts();
 
 // 2
 // Load cart from localStorage if available; localStorage.getItem()
+const cartLS = JSON.parse(localStorage.getItem('cart') )
 // Parse the JSON data and assign it to the cart array; JSON.parse()
+if(cartLS){
 // Display each saved item in the cart UI.
+cartLS.forEach( (cartItem) = >{
+  // Display the cart item
+  const cartItemElement = document.createElement('li');
+  cartItemElement.classList.add('list-group-item', 'd-flex', 'align-items-center', 'mb-2');
+  cartItemElement.innerHTML = `
+    <img src="../../assets/images/${cartItem.image}" alt="${cartItem.title}" class="me-3" style="width: 50px; height: auto;">
+    <div class="flex-grow-1">
+      <h5 class="mb-1">${cartItem.title}</h5>
+      <p class="mb-0">Fabric: ${cartItem.fabric}</p>
+    </div>
+    <div style="width: 80px; text-align: right;">
+      <p class="mb-0"><strong>$${cartItem.price}</strong></p>
+    </div>
+  `;
 
+  // Append the cart item to the cart items container
+  cartItemsContainer.appendChild(cartItemElement);
 
+}
+}
 
   
